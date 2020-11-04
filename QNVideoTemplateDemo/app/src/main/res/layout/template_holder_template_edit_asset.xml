@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="160dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_in_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0.0s"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/template_font_tip_size" />
+
+    <FrameLayout
+        android:layout_width="64dp"
+        android:layout_height="96dp">
+
+        <FrameLayout
+            android:id="@+id/fl_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/template_ic_arrow_right"
+                android:gravity="center"
+                android:text="批量选择"
+                android:textSize="@dimen/template_font_tip_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_iamge_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/iv_image_asset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_asset_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="asset type"
+                android:textSize="@dimen/template_font_tip_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_asset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="一段文字模板"
+                android:textSize="@dimen/template_font_tip_size" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/template_dashed_rect_white" />
+
+    </FrameLayout>
+
+</LinearLayout>

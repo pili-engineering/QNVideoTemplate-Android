@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="template_font_title_size">18sp</dimen>
+    <dimen name="template_font_btn_size">16sp</dimen>
+    <dimen name="template_font_show_size">24sp</dimen>
+    <dimen name="template_font_content_size">14sp</dimen>
+    <dimen name="template_font_tip_size">12sp</dimen>
+</resources>
