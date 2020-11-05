@@ -2,6 +2,7 @@ package com.qiniu.droid.video.template.demo.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -23,10 +24,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener;
 import android.view.View;
-
 import com.qiniu.droid.video.template.demo.utils.RectHelper;
-
-import java.io.FileNotFoundException;
 
 public final class ImageCropViewFixArea extends View {
 
@@ -160,13 +158,21 @@ public final class ImageCropViewFixArea extends View {
         requestLayout();
     }
 
-    public final void setImageUri(Uri imageUri, float cropRatio) {
+    public final void setImageUri(String imageUri, float cropRatio) {
         mCropRatio = cropRatio;
+        AssetFileDescriptor fd = null;
         try {
-            mImageBitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(imageUri));
-        } catch (FileNotFoundException e) {
-            Log.e(getClass().getSimpleName(), "setImageUri, decodeStream fail", e);
+            fd = getContext().getContentResolver().openAssetFileDescriptor(Uri.parse(imageUri), "r");
+            mImageBitmap = BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor());
+        } catch (Exception e) {
+            Log.e(getClass().getSimpleName(), "setImageUri, decode fail", e);
             return;
+        }finally {
+            try {
+                fd.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         mRefresh = true;
         requestLayout();

@@ -25,6 +25,7 @@ public class MediaStoreHelper {
         List<MediaStorageImage> imageItemList = new ArrayList<>();
         String[] columns = new String[]{
                 MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.TITLE,
                 MediaStore.Images.Media.DISPLAY_NAME,
                 MediaStore.Images.Media.WIDTH,
@@ -38,11 +39,12 @@ public class MediaStoreHelper {
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID));
+                    String absolutePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                     Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
                     String displayName = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME));
                     int width = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.WIDTH));
                     int height = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT));
-                    imageItemList.add(new MediaStorageImage(uri, displayName, width, height));
+                    imageItemList.add(new MediaStorageImage(uri.toString(), absolutePath, displayName, width, height));
                 }
             }
         }
@@ -54,6 +56,7 @@ public class MediaStoreHelper {
         @SuppressLint("InlinedApi")
         String[] columns = new String[]{
                 MediaStore.Video.Media._ID,
+                MediaStore.Images.Media.DATA,
                 MediaStore.Video.Media.TITLE,
                 MediaStore.Video.Media.DISPLAY_NAME,
                 MediaStore.Video.Media.DURATION,
@@ -68,13 +71,14 @@ public class MediaStoreHelper {
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
+                    String absolutePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                     Uri uri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id);
                     String displayName = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME));
                     int width = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media.WIDTH));
                     int height = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media.HEIGHT));
                     @SuppressLint("InlinedApi")
                     long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
-                    videoItemList.add(new MediaStorageVideo(uri, displayName, width, height, duration));
+                    videoItemList.add(new MediaStorageVideo(uri.toString(), absolutePath, displayName, width, height, duration));
                 }
             }
         }
@@ -158,11 +162,13 @@ public class MediaStoreHelper {
     }
 
     public static class MediaStorageBase implements Serializable {
-        public final Uri uri;
+        public final String uri;
+        public final String absolutePath;
         public final String displayName;
 
-        public MediaStorageBase(Uri uri, String displayName) {
+        public MediaStorageBase(String uri, String absolutePath, String displayName) {
             this.uri = uri;
+            this.absolutePath = absolutePath;
             this.displayName = displayName;
         }
     }
@@ -171,8 +177,8 @@ public class MediaStoreHelper {
         public final int width;
         public final int height;
 
-        public MediaStorageImage(Uri uri, String displayName, int width, int height) {
-            super(uri, displayName);
+        public MediaStorageImage(String uri, String absolutePath, String displayName, int width, int height) {
+            super(uri, absolutePath, displayName);
             this.width = width;
             this.height = height;
         }
@@ -183,8 +189,8 @@ public class MediaStoreHelper {
         public final int height;
         public final long durationMs;
 
-        public MediaStorageVideo(Uri uri, String displayName, int width, int height, long durationMs) {
-            super(uri, displayName);
+        public MediaStorageVideo(String uri, String absolutePath, String displayName, int width, int height, long durationMs) {
+            super(uri, absolutePath, displayName);
             this.width = width;
             this.height = height;
             this.durationMs = durationMs;

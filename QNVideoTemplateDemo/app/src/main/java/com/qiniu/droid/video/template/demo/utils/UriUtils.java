@@ -12,10 +12,10 @@ public class UriUtils {
 
     private static final String TAG = "UriUtils";
 
-    public static File copyToCacheDir(Context context, Uri uri) {
+    public static File copyToCacheDir(Context context, String uri) {
         InputStream is;
         try {
-            is = context.getContentResolver().openInputStream(uri);
+            is = context.getContentResolver().openInputStream(Uri.parse(uri));
         } catch (FileNotFoundException e) {
             Log.e(TAG, "copyToCacheDir, openInputStream fail", e);
             return null;

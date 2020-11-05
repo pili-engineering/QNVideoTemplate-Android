@@ -146,7 +146,7 @@ public class TemplateDetailFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (mPlayer != null && mPlayer.isPlaying()) {
+                if (mPlayer != null) {
                     int position = (int) (seekBar.getProgress() / 10000f * mPlayer.getDuration());
                     mPlayer.seekTo(position);
                 }

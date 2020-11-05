@@ -137,6 +137,7 @@ public class MediaFileSelectorActivity extends AppCompatActivity {
                 } else {
                     // 裁剪
                     Intent intent = new Intent(MediaFileSelectorActivity.this, ImageCropActivity.class);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.putExtra(ImageCropActivity.K_IMAGE_CROP_URI, item.item.uri);
                     intent.putExtra(ImageCropActivity.K_IMAGE_CROP_WIDTH, mSelectionSizeList.get(0).getWidth());
                     intent.putExtra(ImageCropActivity.K_IMAGE_CROP_HEIGHT, mSelectionSizeList.get(0).getHeight());
@@ -180,6 +181,7 @@ public class MediaFileSelectorActivity extends AppCompatActivity {
                         Intent intent = new Intent(MediaFileSelectorActivity.this, VideoCropActivity.class);
                         intent.putExtra(VideoCropActivity.K_VIDEO_CROP_URI, item.item.uri);
                         intent.putExtra(VideoCropActivity.K_VIDEO_CROP_DURATION, mSelectionDurationList.get(0));
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(intent, K_REQUEST_CODE_VIDEO);
                     }
                 }

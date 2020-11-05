@@ -37,7 +37,7 @@ public class ImageCropActivity extends AppCompatActivity {
     private TitleBar mTitleBar;
     private ImageCropViewFixArea mImageCropView;
 
-    private Uri mSrcUri;
+    private String mSrcUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,16 +74,16 @@ public class ImageCropActivity extends AppCompatActivity {
             }
         });
 
-        mSrcUri = getIntent().getParcelableExtra(K_IMAGE_CROP_URI);
+        mSrcUri = getIntent().getStringExtra(K_IMAGE_CROP_URI);
         int width = getIntent().getIntExtra(K_IMAGE_CROP_WIDTH, 1);
         int height = getIntent().getIntExtra(K_IMAGE_CROP_HEIGHT, 1);
         mImageCropView.setImageUri(mSrcUri, width / 1f / height);
     }
 
-    private boolean cropImage(Uri srcUri, String dstPath, Rect src, Rect dst) throws FileNotFoundException {
+    private boolean cropImage(String srcUri, String dstPath, Rect src, Rect dst) throws FileNotFoundException {
         long start = System.currentTimeMillis();
         Bitmap bitmap = Bitmap.createBitmap(dst.width(), dst.height(), Bitmap.Config.ARGB_8888);
-        Bitmap srcBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(srcUri));
+        Bitmap srcBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Uri.parse(srcUri)));
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(srcBitmap, dst, new Rect(0, 0, dst.width(), dst.height()), new Paint());
         File dstFile = new File(dstPath);

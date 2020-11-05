@@ -38,7 +38,7 @@ public class VideoCropActivity extends AppCompatActivity {
     public static final String K_VIDEO_CROP_RESULT_PATH = "K_VIDEO_CROP_RESULT_PATH";
     public static final String K_VIDEO_CROP_RESULT_DURATION = "K_VIDEO_CROP_RESULT_PATH";
 
-    private Uri mSrcUri;
+    private String mSrcUri;
 
     private TitleBar mTitleBar;
     private VideoTrackTrimView mVideoTrackTrimView;
@@ -56,7 +56,7 @@ public class VideoCropActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.template_activity_video_crop);
 
-        mSrcUri = getIntent().getParcelableExtra(K_VIDEO_CROP_URI);
+        mSrcUri = getIntent().getStringExtra(K_VIDEO_CROP_URI);
         long duration = getIntent().getLongExtra(K_VIDEO_CROP_DURATION, 2500L);
 
         mTitleBar = findViewById(R.id.title_bar);
@@ -214,7 +214,7 @@ public class VideoCropActivity extends AppCompatActivity {
     }
 
     private MediaSource createLoopingClippingSource(long beginMs, long endMs) {
-        MediaSource mediaSource = new DefaultMediaSourceFactory(this).createMediaSource(mSrcUri);
+        MediaSource mediaSource = new DefaultMediaSourceFactory(this).createMediaSource(Uri.parse(mSrcUri));
         ClippingMediaSource clippingMediaSource = new ClippingMediaSource(mediaSource, beginMs * 1000, endMs * 1000);
         return new LoopingMediaSource(clippingMediaSource);
     }

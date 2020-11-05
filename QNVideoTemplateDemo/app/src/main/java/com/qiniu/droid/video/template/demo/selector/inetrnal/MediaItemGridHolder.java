@@ -1,6 +1,5 @@
 package com.qiniu.droid.video.template.demo.selector.inetrnal;
 
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -11,13 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.qiniu.droid.video.template.demo.R;
 import com.qiniu.droid.video.template.demo.utils.MediaStoreHelper;
 
-import java.security.MessageDigest;
 import java.text.DecimalFormat;
 
 public class MediaItemGridHolder extends RecyclerView.ViewHolder {
@@ -46,18 +41,10 @@ public class MediaItemGridHolder extends RecyclerView.ViewHolder {
         if (item.item instanceof MediaStoreHelper.MediaStorageVideo) {
             mTvDuration.setText(parseDuration(((MediaStoreHelper.MediaStorageVideo) item.item).durationMs));
         }
-        Glide.with(itemView).load(item.item.uri)
-                .transform(new BitmapTransformation() {
-                    @Override
-                    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                        Bitmap bitmap = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight);
-                        return TransformationUtils.roundedCorners(pool, bitmap, 16);
-                    }
 
-                    @Override
-                    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-                    }
-                })
+        Glide.with(itemView)
+                .load(item.item.uri)
+                .transform(new GlideCenterCropRoundCornerTransform(16))
                 .into(mIv);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

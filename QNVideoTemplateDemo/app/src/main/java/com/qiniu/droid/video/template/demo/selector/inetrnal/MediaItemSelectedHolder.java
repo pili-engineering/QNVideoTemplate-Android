@@ -30,17 +30,7 @@ public class MediaItemSelectedHolder extends RecyclerView.ViewHolder {
 
     public void bind(final MediaSelectorItem item) {
         Glide.with(itemView).load(item.item.uri)
-                .transform(new BitmapTransformation() {
-                    @Override
-                    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                        Bitmap bitmap = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight);
-                        return TransformationUtils.roundedCorners(pool, bitmap, 16);
-                    }
-
-                    @Override
-                    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-                    }
-                })
+                .transform(new GlideCenterCropRoundCornerTransform(16))
                 .into(mIv);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

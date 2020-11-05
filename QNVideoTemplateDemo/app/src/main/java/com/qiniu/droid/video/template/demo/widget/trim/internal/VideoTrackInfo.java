@@ -24,9 +24,9 @@ public class VideoTrackInfo {
 
     private final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
 
-    public VideoTrackInfo(Context context, Uri videoUri) {
+    public VideoTrackInfo(Context context, String videoUri) {
         mRetriever = new MediaMetadataRetriever();
-        mRetriever.setDataSource(context, videoUri);
+        mRetriever.setDataSource(context, Uri.parse(videoUri));
         durationMs = Long.parseLong(mRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
         width = Integer.parseInt(mRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
         height = Integer.parseInt(mRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
