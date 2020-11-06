@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="template_colorPrimary">#3F66FF</color>
+    <color name="template_colorPrimaryDark">#2439AA</color>
+    <color name="template_colorAccent">#03DAC5</color>
+
+    <color name="template_colorBackground">#232323</color>
+    <color name="template_colorBackgroundWhiteTransparent">#DDFDFDFD</color>
+    <color name="template_colorBackgroundBlackTransparent">#AA000000</color>
+    <color name="template_colorWhiteTransparent">#AAFDFDFD</color>
+</resources>
