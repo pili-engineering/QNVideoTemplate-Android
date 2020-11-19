@@ -50,6 +50,7 @@ public class TemplateDetailFragment extends Fragment {
 
     private Template mTemplate;
 
+    private boolean mUserStop;
     private ExoPlayer mPlayer;
     private Timer mProgressTimer;
     private final DecimalFormat mTsFormat = new DecimalFormat("0.0");
@@ -97,10 +98,6 @@ public class TemplateDetailFragment extends Fragment {
         mTitleBar.setRightListener("编辑", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPlayer != null) {
-                    mPlayer.pause();
-                    mIvPlay.setVisibility(View.INVISIBLE);
-                }
                 Intent intent = new Intent(getActivity(), TemplateEditActivity.class);
                 intent.putExtra(Template.class.getName(), mTemplate);
                 startActivity(intent);
@@ -124,7 +121,9 @@ public class TemplateDetailFragment extends Fragment {
                     if (mPlayer.isPlaying()) {
                         mIvPlay.setVisibility(View.VISIBLE);
                         mPlayer.pause();
+                        mUserStop = true;
                     } else {
+                        mUserStop = false;
                         mIvPlay.setVisibility(View.INVISIBLE);
                         mPlayer.play();
                     }
@@ -180,6 +179,14 @@ public class TemplateDetailFragment extends Fragment {
         super.onPause();
         if (mPlayer != null) {
             mPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPlayer != null && !mUserStop) {
+            mPlayer.play();
         }
     }
 
